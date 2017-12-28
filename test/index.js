@@ -1,0 +1,3 @@
+import './tetris';
+
+mocha.run();
