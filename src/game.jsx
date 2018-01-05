@@ -34,21 +34,21 @@ class Game extends React.Component{
         this.useAI = props.aiSeed!=null;
         this.interval_ai = props.aiInterval || 200;
         let aiSeed = props.aiSeed || {
-            alpha:0.14454541761156853, 
-            beta:-0.06266904571086948, 
-            gama:-0.13412844849297312, 
+            alpha:0.14454541761156853,
+            beta:-0.06266904571086948,
+            gama:-0.13412844849297312,
             delta:-0.025127285656600856
         };
-        
+
         this.ai = new AI(aiSeed.alpha, aiSeed.beta, aiSeed.gama, aiSeed.delta);
         if(props.aiSeed) this.ai.seed = props.aiSeed;
-        
+
         this.aiActions = [];
         this.status = 0;  // 0: pause, 1: running, -1: game over
     }
 
     setPreviewPosition(tetris){
-        tetris.setPos( (this.refs.preview.props.rows -  tetris.height())>>1 
+        tetris.setPos( (this.refs.preview.props.rows -  tetris.height())>>1
                         , (this.refs.preview.props.cols - tetris.width())>>1 );
         return tetris;
     }
@@ -88,9 +88,6 @@ class Game extends React.Component{
                 </section>
                 <section>
                     <p>操作说明:空格键加速，方向键左、右控制平移动，上下键控制变形</p>
-                    <p>训练模式下不能切换操作模式，全程AI控制</p>
-                    <p>Github地址: <a href="https://github.com/hoyt-tian/tetirs" target="_blank">https://github.com/hoyt-tian/tetirs</a></p>
-                    <p>更多说明: <a href="http://www.hoyt-tian.com/tag/tetris/" target="_blank">http://www.hoyt-tian.com/tag/tetris</a></p>
                 </section>
             </section>
         </div>);
@@ -194,7 +191,7 @@ class Game extends React.Component{
 
     }
 
-    moveActiveLeft(){ 
+    moveActiveLeft(){
         if(this.state.active.col>0){
             this.state.active.col--;
             if(Game.testCollsion(this.state.data, this.state.active)){
@@ -202,7 +199,7 @@ class Game extends React.Component{
                 return false;
             }
             return true;
-        } 
+        }
         return false;
     }
 
@@ -214,7 +211,7 @@ class Game extends React.Component{
                 return false;
             }
             return true;
-        } 
+        }
         return false;
     }
 
@@ -233,7 +230,7 @@ class Game extends React.Component{
         }else{
             return false;
         }
-        
+
     }
 
     autoDrop(){
@@ -263,7 +260,7 @@ class Game extends React.Component{
             active: active
         });
 
-        
+
         if(this.useAI){
             if(this.timer_ai==null){
                 this.timer_ai = window.setTimeout(this.aiStep.bind(this), this.interval_ai);
@@ -271,10 +268,10 @@ class Game extends React.Component{
         }else{
             if(this.timer_input == null){
                 this.timer_input = window.setTimeout(this.autoDrop.bind(this), this.interval_input);
-            } 
+            }
         }
 
-        
+
     }
 
 
@@ -356,14 +353,14 @@ class Game extends React.Component{
         if(step && step.code){
             this.doAction(step.code);
         }
-        
+
 
         if(this.aiActions.length > 0){
             this.timer_ai = window.setTimeout(this.aiStep.bind(this), this.interval_ai);
         }else{
             this.doAction(0x20);
         }
-        
+
     }
 
     automation(status){
@@ -387,5 +384,3 @@ class Game extends React.Component{
 }
 
 export default Game;
-
-
